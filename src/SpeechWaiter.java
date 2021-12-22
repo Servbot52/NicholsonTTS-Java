@@ -90,18 +90,21 @@ class SpeechWaiter{
 		needNewText = true;
 		setContinueReading(false);
 		endThread();
+		getTextSpeech().stopSpeaking();
+		isSpeaking = false;
 	}
 	
 	boolean needNewText = true;
 	private boolean firstElement = true;
 	void inputPlayNew(String selectedText, int selectedStart) {
+		stopReading();
 		firstElement = true;
 		needNewText = false;
 		playTimeStamp = System.currentTimeMillis();
 		System.out.println(selectedText);
 		getReadQueue().startBuildingSections(selectedText, selectedStart);
 		setContinueReading(true);
-		//queueLoop();
+		
 		allSectionsBuild = false;
 
 

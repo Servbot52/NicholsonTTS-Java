@@ -30,6 +30,13 @@ public class FieldExtend {
 		area.getHighlighter().removeAllHighlights();
 	}
 	
+	void isItVisable() {
+		//scroll.getVerticalScrollBar().setValueIsAdjusting(false);
+		int lowValue = scroll.getVerticalScrollBar().getValue();
+		int highValue = lowValue + scroll.getVerticalScrollBar().getHeight();
+		
+	}
+	/*
 	void getLocation(int theCharacter) {
 		View rootView = area.getUI().getRootView(area);
 		
@@ -41,4 +48,5 @@ public class FieldExtend {
 	    }
 		
 	}
+	*/
 }
