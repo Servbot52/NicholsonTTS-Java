@@ -14,7 +14,7 @@ public class TextWindow extends JPanel{
 	/**
 	 * 
 	 */
-	//private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	protected JTextPane mainField; 
 	protected JButton buttonMoveBack, buttonPlay, buttonMoveForword;
 	PaneScroll paneScroll;
