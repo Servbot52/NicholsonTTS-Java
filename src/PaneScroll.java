@@ -1,7 +1,7 @@
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -28,14 +28,17 @@ public class PaneScroll{
 	
 	
 	private void highlight(int start, int length) {
+		System.out.println("highlight:" + start + " for " + length);
 		try {
-			readingHighlight = area.getHighlighter().addHighlight(start, start + length, new DefaultHighlightPainter(Color.yellow));
+			DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+			readingHighlight = area.getHighlighter().addHighlight(start, start + length, highlightPainter);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	private void removeHighLight() {
+		System.out.println("remove highlight");
 		area.getHighlighter().removeHighlight(readingHighlight);
 	}
 	

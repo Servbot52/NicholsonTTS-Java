@@ -53,22 +53,22 @@ class SpeechWaiter{
 	}
 	
 	boolean isSpeaking = false;
-	boolean isNextPartReady() {
+	private boolean isNextPartReady() {
 		if(readQueue.currentElement == null) {
 			return false;
 		}
 		else if(readQueue.currentElement.getNextSection() == null) {
 			return false;
 		}
-		System.out.println("c");
 		return true;
 	}
 	
 	void speakingDone() {
-		pScroll.finishReadingArea();
 		firstElement = false;
 		isSpeaking = false;
 		if(isNextPartReady() && getContinueReading()) {
+			System.out.println("preparing to speak.");
+			pScroll.finishReadingArea();
 			getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
 			read();
 		}
@@ -76,6 +76,7 @@ class SpeechWaiter{
 	void newSectionReady(Section newSection) {
 		readQueue.addSection(newSection);
 		if(isSpeaking == false && getContinueReading()) {
+			pScroll.finishReadingArea();
 			if(firstElement == false)
 				getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
 			read();
@@ -87,6 +88,7 @@ class SpeechWaiter{
 		
 		isSpeaking = true;
 		Section readSection = getReadQueue().currentElement;
+		System.out.println("got here");
 		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
 		getTextSpeech().speakSection(readSection);
 	}
@@ -134,7 +136,7 @@ class SpeechWaiter{
 	}
 	
 	
-	private void endThread() {
+	void endThread() {
 		SectionInstruction sEnder = new SectionInstruction("END", playTimeStamp);
 		try {
 			sectionBlockQueue.put(sEnder);

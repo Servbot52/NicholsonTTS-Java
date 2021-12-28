@@ -36,6 +36,7 @@ public class TextWindow extends JPanel{
 
 		
 		mainField = new JTextPane();
+		mainField.setText("Hold on to your hats. I don't know if this will work.");
 		scroll = new JScrollPane (mainField, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		theFrame.getContentPane().add(scroll, BorderLayout.CENTER);
@@ -79,6 +80,10 @@ class PlayListener implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(mainField.getCaretPosition() == mainField.getText().length() && mainField.getSelectedText() == null) {
+			mainField.moveCaretPosition(0);
+		}
+		
 		if(speechWaiter.needNewText) {
 			newText();
 		}else if(speechWaiter.getContinueReading()) {
@@ -95,10 +100,13 @@ class PlayListener implements ActionListener{
 		if(mainField.getSelectedText() != null) {
 			point_A = mainField.getSelectionStart();
 			point_B = mainField.getSelectionEnd();
-		}else {
+		}else{
 			point_A = mainField.getCaretPosition();
 			point_B = mainField.getText().length();
 		}
+		if(point_A == point_B)
+			return;
+		
 		fullText = mainField.getText().substring(point_A, point_B);
 		speechWaiter.inputPlayNew(fullText, point_A);
 	}
