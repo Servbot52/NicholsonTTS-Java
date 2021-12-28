@@ -4,7 +4,12 @@ import java.util.concurrent.BlockingQueue;
 import javax.swing.JButton;
 
 class SpeechWaiter{
-
+	SpeechWaiter(JButton playButton, PaneScroll pScroll){
+		this.playButton = playButton;
+		this.pScroll = pScroll;
+	}
+	
+	
 	JButton playButton;
 	private boolean continueReading = false;
 	boolean getContinueReading() {
@@ -19,6 +24,8 @@ class SpeechWaiter{
 		}
 		continueReading = bool;
 	}
+	private PaneScroll pScroll;
+	
 	
 	
 	private long playTimeStamp = System.currentTimeMillis();
@@ -58,6 +65,7 @@ class SpeechWaiter{
 	}
 	
 	void speakingDone() {
+		pScroll.finishReadingArea();
 		firstElement = false;
 		isSpeaking = false;
 		if(isNextPartReady() && getContinueReading()) {
@@ -79,6 +87,7 @@ class SpeechWaiter{
 		
 		isSpeaking = true;
 		Section readSection = getReadQueue().currentElement;
+		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
 		getTextSpeech().speakSection(readSection);
 	}
 	void pause() {

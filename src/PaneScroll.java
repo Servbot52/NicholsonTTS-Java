@@ -8,12 +8,26 @@ import java.awt.geom.Rectangle2D;
 
 
 
-public class FieldExtend{
+public class PaneScroll{
 	private JScrollPane scroll;
 	private JTextPane area;
 	private Object readingHighlight;
 	
-	void highlight(int start, int length) {
+	PaneScroll(JScrollPane scroll, JTextPane pane){
+		area = pane;
+		this.scroll = scroll;
+	}
+	
+	void readingNewArea(int start, int length) {
+		highlight(start, length);
+		makeItVisable(start, length);
+	}
+	void finishReadingArea() {
+		removeHighLight();
+	}
+	
+	
+	private void highlight(int start, int length) {
 		try {
 			readingHighlight = area.getHighlighter().addHighlight(start, start + length, new DefaultHighlightPainter(Color.yellow));
 		} catch (BadLocationException e) {
@@ -21,11 +35,11 @@ public class FieldExtend{
 			e.printStackTrace();
 		}
 	}
-	void removeHighLight() {
+	private void removeHighLight() {
 		area.getHighlighter().removeHighlight(readingHighlight);
 	}
 	
-	void makeItVisable(int start, int length) {
+	private void makeItVisable(int start, int length) {
 		try {
 			Rectangle2D rect = area.modelToView2D(start);
 			rect.add(area.modelToView2D(start + length));

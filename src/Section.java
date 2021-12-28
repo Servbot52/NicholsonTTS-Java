@@ -4,10 +4,10 @@ public class Section {
 	long getTimeStamp() { return timeStamp; }
 	
 	
-	protected int startPoint;
+	private int startPoint;
 	int getStart(){return startPoint;}
 	
-	protected int endPoint;
+	private int endPoint;
 	int getEnd() {return endPoint;}
 	
 	protected String sectionText;
