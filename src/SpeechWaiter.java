@@ -5,6 +5,7 @@ import javax.swing.JButton;
 
 class SpeechWaiter{
 	SpeechWaiter(JButton playButton, PaneScroll pScroll){
+		System.out.println("this is working?");
 		this.playButton = playButton;
 		this.pScroll = pScroll;
 	}

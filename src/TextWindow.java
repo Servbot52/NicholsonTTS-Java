@@ -39,6 +39,7 @@ public class TextWindow extends JPanel{
 		mainField.setText("Hold on to your hats. I don't know if this will work.");
 		scroll = new JScrollPane (mainField, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
+		
 		theFrame.getContentPane().add(scroll, BorderLayout.CENTER);
 		theFrame.getContentPane().add(buttonPlay, BorderLayout.PAGE_START);
 
@@ -49,6 +50,7 @@ public class TextWindow extends JPanel{
 		
 		
 		//move following to launcher?
+		PaneScroll paneScroll = new PaneScroll(scroll, mainField);
 		speechWaiter = new SpeechWaiter(buttonPlay, paneScroll);
 
 		speechWaiter.playButton = buttonPlay;

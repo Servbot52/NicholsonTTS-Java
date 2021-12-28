@@ -39,7 +39,8 @@ public class PaneScroll{
 	}
 	private void removeHighLight() {
 		System.out.println("remove highlight");
-		area.getHighlighter().removeHighlight(readingHighlight);
+		if(readingHighlight != null)
+			area.getHighlighter().removeHighlight(readingHighlight);
 	}
 	
 	private void makeItVisable(int start, int length) {
