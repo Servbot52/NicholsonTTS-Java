@@ -43,33 +43,26 @@ public class PaneScroll{
 			area.getHighlighter().removeHighlight(readingHighlight);
 	}
 	
-	@SuppressWarnings("static-access")
 	private void makeItVisable(int start, int length) {
 		if(length == 0)
 			return;
 		try {
 			Rectangle2D rect = area.modelToView2D(start);
-			System.out.println("H:" + rect.OUT_TOP);
 			rect.add(area.modelToView2D(start + length));
 			rect = rect.getBounds2D();
 			
 			
 			int scrollMin = scroll.getVerticalScrollBar().getValue();
 			int scrollMax = scroll.getVerticalScrollBar().getHeight() + scrollMin;
-			System.out.println("Scroll: "+ scrollMin + " to " + scrollMax);
 			
 			int minY = (int) rect.getMinY();
 			int maxY = (int) rect.getMaxY();
-			System.out.println("rect: "+ minY + " to " + maxY);
 			
 			if(!(minY < scrollMax && minY > scrollMin) || !(maxY < scrollMax && maxY > scrollMin)) {
-				System.out.println("Not Contained.");
 				if(minY > scroll.getVerticalScrollBar().getMaximum())
 					minY = scroll.getVerticalScrollBar().getMaximum();
 				
 				scroll.getVerticalScrollBar().setValue(minY);
-				
-				//scroll.scrollRectToVisible( (Rectangle) rect);
 			}
 			
 		} catch (BadLocationException e1) {
