@@ -78,6 +78,7 @@ class SpeechWaiter{
 		readQueue.addSection(newSection);
 		if(isSpeaking == false && getContinueReading()) {
 			pScroll.finishReadingArea();
+			
 			if(firstElement == false)
 				getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
 			read();

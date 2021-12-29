@@ -17,7 +17,7 @@ public class TextWindow extends JPanel{
 	private static final long serialVersionUID = 1L;
 	protected JTextPane mainField; 
 	protected JButton buttonMoveBack, buttonPlay, buttonMoveForword;
-	PaneScroll paneScroll;
+	//PaneScroll paneScroll;
 	JFrame theFrame;
 	JScrollPane scroll;
 	
@@ -49,21 +49,12 @@ public class TextWindow extends JPanel{
 		
 		
 		
-		//move following to launcher?
-		PaneScroll paneScroll = new PaneScroll(scroll, mainField);
-		speechWaiter = new SpeechWaiter(buttonPlay, paneScroll);
-
-		speechWaiter.playButton = buttonPlay;
 		
-		PlayListener pListener = new PlayListener(speechWaiter, buttonPlay, mainField);
-		buttonPlay.addActionListener(pListener);
 		
 		
 		//JPanel menuPanel = new JPanel();
 		
 	}
-	
-	
 	
 	
 	
