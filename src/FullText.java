@@ -35,9 +35,7 @@ public class FullText  extends Thread{
     private BlockingQueue<Section> sectionBlockQueue(){ return readQueue.speechWaiter.sectionBlockQueue; }
     private long timeStamp() { return readQueue.speechWaiter.getTimeStamp(); }
     
-    private boolean newFull = true;
     public void run() {
-    	newFull = true;
     	while(reachedEnd() == false) {
     		Section nextSection = getNewSection();
     		//add pronunciation here

@@ -13,7 +13,6 @@ class CaretListener implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent e)  {
-		speechWaiter.needNewText = true;
-		speechWaiter.pause();
+		speechWaiter.stopReading();
 	}
 }

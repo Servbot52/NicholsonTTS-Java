@@ -85,6 +85,8 @@ class SpeechWaiter{
 		}
 	}
 	void read() {
+		if(isPaused)
+			return;
 		if(getContinueReading() == false)
 			return;
 		
@@ -94,12 +96,22 @@ class SpeechWaiter{
 		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
 		getTextSpeech().speakSection(readSection);
 	}
+	
+	private boolean isPaused = false;
+	
 	void pause() {
-		setContinueReading(false);
+		isPaused = true;
+		SectionInstruction pauseReading = new SectionInstruction("PAUSE", playTimeStamp);
+		try {
+			sectionBlockQueue.put(pauseReading);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		getTextSpeech().stopSpeaking();
 		isSpeaking = false;
 	}
-	private void stopReading() {
+	void stopReading() {
 		needNewText = true;
 		setContinueReading(false);
 		endThread();
@@ -110,6 +122,7 @@ class SpeechWaiter{
 	boolean needNewText = true;
 	private boolean firstElement = true;
 	void inputPlayNew(String selectedText, int selectedStart) {
+		isPaused = false;
 		stopReading();
 		firstElement = true;
 		needNewText = false;
@@ -124,13 +137,15 @@ class SpeechWaiter{
 		QueueThread qThread = new QueueThread(getTimeStamp(), this);
 		qThread.start();
 	}
-	void inputContinue() {
-		setContinueReading(true);
-		//queueLoop();
-		allSectionsBuild = false;
-		
-		//resume instruction
-		
+	void inputResume() {
+		isPaused = false;
+		SectionInstruction pauseReading = new SectionInstruction("RESUME", playTimeStamp);
+		try {
+			sectionBlockQueue.put(pauseReading);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	void inputPause() {
 		
@@ -138,7 +153,8 @@ class SpeechWaiter{
 	}
 	
 	
-	void endThread() {
+	private void endThread() {
+		needNewText = true;
 		SectionInstruction sEnder = new SectionInstruction("END", playTimeStamp);
 		try {
 			sectionBlockQueue.put(sEnder);
@@ -146,6 +162,7 @@ class SpeechWaiter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		pause();
 	}
 }
 

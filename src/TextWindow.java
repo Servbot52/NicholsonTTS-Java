@@ -1,14 +1,9 @@
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.JButton;  
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class TextWindow extends JPanel{
 	/**

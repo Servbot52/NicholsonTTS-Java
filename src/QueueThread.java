@@ -19,12 +19,16 @@ public class QueueThread extends Thread {
 			System.out.println("loop: " + count);
 			count++;
 			try {
+				
 				Section newItem = sectionBlockQueue().take();
 				System.out.println("Section: " + newItem.getReadText());
 				if(newItem.getTimeStamp() == timeStamp) {
 					if(newItem.getStart() == -1) {
 						if(newItem.getSectionText() == "END") {
 							setContinueReading(false);
+						}
+						if(newItem.getSectionText() == "RESUME") {
+							sWaiter.read();
 						}
 						if(newItem.getSectionText() == "allSectionsBuilt") {
 							allSectionsBuild = true;
@@ -34,18 +38,14 @@ public class QueueThread extends Thread {
 								thisContinue = false;
 								setContinueReading(false);
 							}
-							System.out.println("Speak?");
 							sWaiter.speakingDone();
-						}
-						
-						if(newItem.getSectionText() == "Pause") {
-							sWaiter.pause();
 						}
 						
 					}else {
 						sWaiter.newSectionReady(newItem);
 					}
 				}
+				
 				System.out.println(count + " " + getContinueReading() + " : " + allSectionsBuild + " : " + sWaiter.getReadQueue().isCurrentFinal());
 				System.out.println();
 			} catch (InterruptedException e) {

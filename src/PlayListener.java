@@ -25,7 +25,7 @@ class PlayListener implements ActionListener{
 		}else if(speechWaiter.getContinueReading()) {
 			speechWaiter.inputPause();
 		}else {
-			speechWaiter.inputContinue();
+			speechWaiter.inputResume();
 		}
 	}
 	
