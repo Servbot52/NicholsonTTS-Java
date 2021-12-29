@@ -14,7 +14,6 @@ class SpeechWaiter{
 	JButton playButton;
 	private boolean continueReading = false;
 	boolean getContinueReading() {
-		System.out.println("2");
 		return continueReading;
 	}
 	void setContinueReading(boolean bool) {
@@ -68,8 +67,11 @@ class SpeechWaiter{
 		firstElement = false;
 		isSpeaking = false;
 		if(isNextPartReady() && getContinueReading()) {
-			System.out.println("preparing to speak.");
 			pScroll.finishReadingArea();
+			
+			if(isPaused)
+				return;
+			
 			getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
 			read();
 		}
@@ -79,6 +81,9 @@ class SpeechWaiter{
 		if(isSpeaking == false && getContinueReading()) {
 			pScroll.finishReadingArea();
 			
+			if(isPaused)
+				return;
+			
 			if(firstElement == false)
 				getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
 			read();
@@ -87,34 +92,32 @@ class SpeechWaiter{
 	void read() {
 		if(isPaused)
 			return;
+		
 		if(getContinueReading() == false)
+			return;
+		
+		if(isSpeaking)
 			return;
 		
 		isSpeaking = true;
 		Section readSection = getReadQueue().currentElement;
-		System.out.println("got here");
 		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
 		getTextSpeech().speakSection(readSection);
 	}
 	
 	private boolean isPaused = false;
+	boolean getIsPaused() {return isPaused;}
 	
 	void pause() {
 		isPaused = true;
-		SectionInstruction pauseReading = new SectionInstruction("PAUSE", playTimeStamp);
-		try {
-			sectionBlockQueue.put(pauseReading);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		getTextSpeech().stopSpeaking();
 		isSpeaking = false;
 	}
 	void stopReading() {
+		System.out.println("________StopReading()__________");
 		needNewText = true;
 		setContinueReading(false);
-		endThread();
 		getTextSpeech().stopSpeaking();
 		isSpeaking = false;
 	}
@@ -123,7 +126,6 @@ class SpeechWaiter{
 	private boolean firstElement = true;
 	void inputPlayNew(String selectedText, int selectedStart) {
 		isPaused = false;
-		stopReading();
 		firstElement = true;
 		needNewText = false;
 		playTimeStamp = System.currentTimeMillis();
@@ -139,7 +141,17 @@ class SpeechWaiter{
 	}
 	void inputResume() {
 		isPaused = false;
-		SectionInstruction pauseReading = new SectionInstruction("RESUME", playTimeStamp);
+		SectionInstruction resumeReading = new SectionInstruction("RESUME", playTimeStamp);
+		try {
+			sectionBlockQueue.put(resumeReading);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	void inputPause() {
+		System.out.println("> pause input");
+		SectionInstruction pauseReading = new SectionInstruction("PAUSE", playTimeStamp);
 		try {
 			sectionBlockQueue.put(pauseReading);
 		} catch (InterruptedException e) {
@@ -147,13 +159,10 @@ class SpeechWaiter{
 			e.printStackTrace();
 		}
 	}
-	void inputPause() {
-		
-		pause();
-	}
 	
 	
 	private void endThread() {
+		System.out.println("endThread()");
 		needNewText = true;
 		SectionInstruction sEnder = new SectionInstruction("END", playTimeStamp);
 		try {

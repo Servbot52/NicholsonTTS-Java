@@ -30,6 +30,10 @@ public class QueueThread extends Thread {
 						if(newItem.getSectionText() == "RESUME") {
 							sWaiter.read();
 						}
+						if(newItem.getSectionText() == "PAUSE") {
+							System.out.println("-----pause------");
+							sWaiter.pause();
+						}
 						if(newItem.getSectionText() == "allSectionsBuilt") {
 							allSectionsBuild = true;
 						}
@@ -54,10 +58,11 @@ public class QueueThread extends Thread {
 				e.printStackTrace();
 			}
 		}
-		if(timeStamp == sWaiter.getTimeStamp())
+		if(timeStamp == sWaiter.getTimeStamp()) {
+			System.out.println("end of loop______________");
 			sWaiter.needNewText = true;
-		
-		System.out.println(getContinueReading() + "freedom from this loop.");
+		}
+		System.out.println("Thread loop end.");
 	}
 	
 	private boolean thisContinue = true;

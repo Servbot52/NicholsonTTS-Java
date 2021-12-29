@@ -16,16 +16,22 @@ class PlayListener implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("Caret: " + mainField.getCaretPosition() + " length: " + mainField.getText().length());
 		if(mainField.getCaretPosition() == mainField.getText().length() && mainField.getSelectedText() == null) {
 			mainField.moveCaretPosition(0);
+			return;
 		}
-		
+		System.out.println("needNew: " + speechWaiter.needNewText);
+		System.out.println("IsPaused: " + speechWaiter.getIsPaused());
 		if(speechWaiter.needNewText) {
+			System.out.println("play: new text");
 			newText();
-		}else if(speechWaiter.getContinueReading()) {
-			speechWaiter.inputPause();
-		}else {
+		}else if(speechWaiter.getIsPaused()) {
+			System.out.println("play: resume");
 			speechWaiter.inputResume();
+		}else {
+			System.out.println("play: pause");
+			speechWaiter.inputPause();
 		}
 	}
 	
