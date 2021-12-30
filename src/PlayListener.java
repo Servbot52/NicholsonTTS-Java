@@ -8,6 +8,7 @@ class PlayListener implements ActionListener{
 	JButton playButton;
 	JTextPane mainField;
 	
+	
 	PlayListener(SpeechWaiter sW, JButton playB, JTextPane mainField){
 		speechWaiter = sW;
 		playButton = playB;
@@ -22,11 +23,11 @@ class PlayListener implements ActionListener{
 			return;
 		}
 		System.out.println("needNew: " + speechWaiter.needNewText);
-		System.out.println("IsPaused: " + speechWaiter.getIsPaused());
+		System.out.println("IsPaused: " + speechWaiter.isPaused);
 		if(speechWaiter.needNewText) {
 			System.out.println("play: new text");
 			newText();
-		}else if(speechWaiter.getIsPaused()) {
+		}else if(speechWaiter.isPaused) {
 			System.out.println("play: resume");
 			speechWaiter.inputResume();
 		}else {
@@ -52,4 +53,5 @@ class PlayListener implements ActionListener{
 		fullText = mainField.getText().substring(point_A, point_B);
 		speechWaiter.inputPlayNew(fullText, point_A);
 	}
+	
 }

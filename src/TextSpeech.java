@@ -16,7 +16,7 @@ class TextSpeech {
 		if(thread == null)
 			return;
 		try {
-			thread.interrupt();
+			thread.theVoice.deallocate();
 		} catch(Exception e) {
 			System.out.println("Stop Speaking Error");
 		}
@@ -35,4 +35,15 @@ class TextSpeech {
 		thread = new SpeakingThread(theSection, speechWaiter, voice);
 		thread.start();
 	}
+	
+	private String voiceName;
+	String[] voiceOptions() {
+		Voice[] voices = VoiceManager.getInstance().getVoices();
+		String[] names = new String[voices.length];
+		for(int i = 0; i < voices.length; i++) {
+			names[i] = voices[i].getName();
+		}
+		return names;
+	}
+	
 }

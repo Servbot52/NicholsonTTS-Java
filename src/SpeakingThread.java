@@ -5,7 +5,7 @@ public class SpeakingThread extends Thread{
 	private Section theSection;
 	private String whatToSay() { return theSection.getReadText(); }
 	private SpeechWaiter waiter;
-	private Voice theVoice;
+	Voice theVoice;
 	
 	SpeakingThread(Section theSection, SpeechWaiter sW, Voice v){
 		this.theSection = theSection;

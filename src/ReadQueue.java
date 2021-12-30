@@ -23,19 +23,13 @@ public class ReadQueue {
 	Section currentElement;
 	
 	void stepBack() {
-		currentElement = currentElement.getPreviousSection();
-		if(speechWaiter.isSpeaking) {
-			speechWaiter.pause();
-			speechWaiter.read();
-		}
+		if(currentElement.getPreviousSection() != null)
+			currentElement = currentElement.getPreviousSection();
 	}
 
 	void stepForward() {
-		currentElement = currentElement.getNextSection();
-		if(speechWaiter.isSpeaking) {
-			speechWaiter.pause();
-			speechWaiter.read();
-		}
+		if(currentElement.getNextSection() != null)
+			currentElement = currentElement.getNextSection();
 	}
 	
 	

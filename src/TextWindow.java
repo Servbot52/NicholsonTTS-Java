@@ -21,6 +21,12 @@ public class TextWindow extends JPanel{
 	
 	TextWindow (){
 		buttonPlay = new JButton(">");
+		buttonMoveBack = new JButton("<<");
+		buttonMoveForword = new JButton(">>");
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(buttonMoveBack, LEFT_ALIGNMENT);
+		buttonPanel.add(buttonPlay, CENTER_ALIGNMENT);
+		buttonPanel.add(buttonMoveForword, RIGHT_ALIGNMENT);
 		
 		theFrame = new JFrame("NicholsonTTS");
 		
@@ -36,7 +42,7 @@ public class TextWindow extends JPanel{
 		
 		
 		theFrame.getContentPane().add(scroll, BorderLayout.CENTER);
-		theFrame.getContentPane().add(buttonPlay, BorderLayout.PAGE_START);
+		theFrame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
 
 		theFrame.pack();
 		theFrame.setVisible(true);

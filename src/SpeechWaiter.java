@@ -5,7 +5,6 @@ import javax.swing.JButton;
 
 class SpeechWaiter{
 	SpeechWaiter(JButton playButton, PaneScroll pScroll){
-		System.out.println("this is working?");
 		this.playButton = playButton;
 		this.pScroll = pScroll;
 	}
@@ -72,7 +71,7 @@ class SpeechWaiter{
 			if(isPaused)
 				return;
 			
-			getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
+			getReadQueue().stepForward();
 			read();
 		}
 	}
@@ -85,7 +84,7 @@ class SpeechWaiter{
 				return;
 			
 			if(firstElement == false)
-				getReadQueue().currentElement = getReadQueue().currentElement.getNextSection();
+				getReadQueue().stepForward();
 			read();
 		}
 	}
@@ -105,8 +104,7 @@ class SpeechWaiter{
 		getTextSpeech().speakSection(readSection);
 	}
 	
-	private boolean isPaused = false;
-	boolean getIsPaused() {return isPaused;}
+	boolean isPaused = false;
 	
 	void pause() {
 		isPaused = true;
@@ -115,7 +113,6 @@ class SpeechWaiter{
 		isSpeaking = false;
 	}
 	void stopReading() {
-		System.out.println("________StopReading()__________");
 		needNewText = true;
 		setContinueReading(false);
 		getTextSpeech().stopSpeaking();
@@ -136,11 +133,10 @@ class SpeechWaiter{
 		allSectionsBuild = false;
 
 
-		QueueThread qThread = new QueueThread(getTimeStamp(), this);
+		QueueThread qThread = new QueueThread(getTimeStamp(), this, getReadQueue());
 		qThread.start();
 	}
 	void inputResume() {
-		isPaused = false;
 		SectionInstruction resumeReading = new SectionInstruction("RESUME", playTimeStamp);
 		try {
 			sectionBlockQueue.put(resumeReading);
@@ -150,7 +146,6 @@ class SpeechWaiter{
 		}
 	}
 	void inputPause() {
-		System.out.println("> pause input");
 		SectionInstruction pauseReading = new SectionInstruction("PAUSE", playTimeStamp);
 		try {
 			sectionBlockQueue.put(pauseReading);
@@ -160,6 +155,22 @@ class SpeechWaiter{
 		}
 	}
 	
+	void inputStepBack() {
+		try {
+			sectionBlockQueue.put(new SectionInstruction("STEPBACK", playTimeStamp));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	void inputStepForward() {
+		try {
+			sectionBlockQueue.put(new SectionInstruction("STEPFORWORD", playTimeStamp));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	private void endThread() {
 		System.out.println("endThread()");
@@ -171,7 +182,6 @@ class SpeechWaiter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		pause();
 	}
 }
 

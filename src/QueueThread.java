@@ -1,11 +1,12 @@
 import java.util.concurrent.BlockingQueue;
 
 public class QueueThread extends Thread {
-	QueueThread(long timeStamp, SpeechWaiter sWaiter){
+	QueueThread(long timeStamp, SpeechWaiter sWaiter, ReadQueue readQueue){
 		this.timeStamp = timeStamp;
 		this.sWaiter = sWaiter;
+		this.readQueue = readQueue;
 	}
-	
+	private ReadQueue readQueue;
 	long timeStamp;
 	
 	SpeechWaiter sWaiter;
@@ -25,9 +26,17 @@ public class QueueThread extends Thread {
 				if(newItem.getTimeStamp() == timeStamp) {
 					if(newItem.getStart() == -1) {
 						if(newItem.getSectionText() == "END") {
+							sWaiter.pause();
 							setContinueReading(false);
 						}
+						if(newItem.getSectionText() == "STEPFORWORD") {
+							stepForword();
+						}
+						if(newItem.getSectionText() == "STEPBACK") {
+							stepBack();
+						}
 						if(newItem.getSectionText() == "RESUME") {
+							sWaiter.isPaused = false;
 							sWaiter.read();
 						}
 						if(newItem.getSectionText() == "PAUSE") {
@@ -71,4 +80,17 @@ public class QueueThread extends Thread {
 		sWaiter.setContinueReading(bool);
 	}
 	private boolean getContinueReading() {return thisContinue && sWaiter.getContinueReading(); }
+
+	private void stepForword() {
+		sWaiter.pause();
+		readQueue.stepForward();
+		sWaiter.isPaused = false;
+		sWaiter.read();
+	}
+	private void stepBack() {
+		sWaiter.pause();
+		readQueue.stepBack();
+		sWaiter.isPaused = false;
+		sWaiter.read();
+	}
 }
