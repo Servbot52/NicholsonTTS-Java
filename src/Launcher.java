@@ -1,6 +1,8 @@
 
 public class Launcher {
 	public static void main(String[] args) {
+		Settings settings = new Settings();
+		
 		TextWindow window = new TextWindow();
 		//move following to launcher?
 		PaneScroll paneScroll = new PaneScroll(window.scroll, window.mainField);

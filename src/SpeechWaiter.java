@@ -75,19 +75,6 @@ class SpeechWaiter{
 			read();
 		}
 	}
-	void newSectionReady(Section newSection) {
-		readQueue.addSection(newSection);
-		if(isSpeaking == false && getContinueReading()) {
-			pScroll.finishReadingArea();
-			
-			if(isPaused)
-				return;
-			
-			if(firstElement == false)
-				getReadQueue().stepForward();
-			read();
-		}
-	}
 	void read() {
 		if(isPaused)
 			return;
@@ -136,6 +123,20 @@ class SpeechWaiter{
 		QueueThread qThread = new QueueThread(getTimeStamp(), this, getReadQueue());
 		qThread.start();
 	}
+	void newSectionReady(Section newSection) {
+		readQueue.addSection(newSection);
+		if(isSpeaking == false && getContinueReading()) {
+			pScroll.finishReadingArea();
+			
+			if(isPaused)
+				return;
+			
+			if(firstElement == false)
+				getReadQueue().stepForward();
+			read();
+		}
+	}
+	
 	void inputResume() {
 		SectionInstruction resumeReading = new SectionInstruction("RESUME", playTimeStamp);
 		try {

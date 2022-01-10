@@ -25,35 +25,35 @@ public class QueueThread extends Thread {
 				System.out.println("Section: " + newItem.getReadText());
 				if(newItem.getTimeStamp() == timeStamp) {
 					if(newItem.getStart() == -1) {
-						if(newItem.getSectionText() == "END") {
+						switch(newItem.getSectionText()) {
+						case "END":
 							sWaiter.pause();
 							setContinueReading(false);
-						}
-						if(newItem.getSectionText() == "STEPFORWORD") {
+							break;
+						case "STEPFORWORD":
 							stepForword();
-						}
-						if(newItem.getSectionText() == "STEPBACK") {
+							break;
+						case "STEPBACK":
 							stepBack();
-						}
-						if(newItem.getSectionText() == "RESUME") {
+							break;
+						case "RESUME":
 							sWaiter.isPaused = false;
 							sWaiter.read();
-						}
-						if(newItem.getSectionText() == "PAUSE") {
-							System.out.println("-----pause------");
+							break;
+						case "PAUSE":
 							sWaiter.pause();
-						}
-						if(newItem.getSectionText() == "allSectionsBuilt") {
+							break;
+						case "allSectionsBuilt":
 							allSectionsBuild = true;
-						}
-						if(newItem.getSectionText() == "VoiceEnd") {
+							break;
+						case "VoiceEnd":
 							if(allSectionsBuild && sWaiter.getReadQueue().isCurrentFinal()) {
 								thisContinue = false;
 								setContinueReading(false);
 							}
 							sWaiter.speakingDone();
-						}
-						
+							break;
+						}						
 					}else {
 						sWaiter.newSectionReady(newItem);
 					}
@@ -68,7 +68,6 @@ public class QueueThread extends Thread {
 			}
 		}
 		if(timeStamp == sWaiter.getTimeStamp()) {
-			System.out.println("end of loop______________");
 			sWaiter.needNewText = true;
 		}
 		System.out.println("Thread loop end.");
@@ -93,4 +92,6 @@ public class QueueThread extends Thread {
 		sWaiter.isPaused = false;
 		sWaiter.read();
 	}
+	
+	
 }
