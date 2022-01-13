@@ -81,16 +81,24 @@ public class QueueThread extends Thread {
 	private boolean getContinueReading() {return thisContinue && sWaiter.getContinueReading(); }
 
 	private void stepForword() {
-		sWaiter.pause();
-		readQueue.stepForward();
-		sWaiter.isPaused = false;
-		sWaiter.read();
+		if(sWaiter.isPaused) {
+			readQueue.stepForward();
+		}else{
+			sWaiter.pause();
+			readQueue.stepForward();
+			sWaiter.isPaused = false;
+			sWaiter.read();
+		}
 	}
 	private void stepBack() {
-		sWaiter.pause();
-		readQueue.stepBack();
-		sWaiter.isPaused = false;
-		sWaiter.read();
+		if(sWaiter.isPaused) {
+			readQueue.stepBack();
+		}else{
+			sWaiter.pause();
+			readQueue.stepBack();
+			sWaiter.isPaused = false;
+			sWaiter.read();
+		}
 	}
 	
 	

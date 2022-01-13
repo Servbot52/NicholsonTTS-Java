@@ -1,4 +1,3 @@
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -11,6 +10,6 @@ class CaretListener implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent e)  {
-		speechWaiter.inputCurserMovement();
+		speechWaiter.inputEnd();
 	}
 }

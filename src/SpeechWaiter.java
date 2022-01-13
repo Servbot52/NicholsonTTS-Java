@@ -172,10 +172,7 @@ class SpeechWaiter{
 			e.printStackTrace();
 		}
 	}
-	void inputCurserMovement() {
-		endThread();
-	}
-	private void endThread() {
+	void inputEnd() {
 		System.out.println("endThread()");
 		needNewText = true;
 		SectionInstruction sEnder = new SectionInstruction("END", playTimeStamp);
