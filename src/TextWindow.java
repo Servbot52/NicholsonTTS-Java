@@ -22,6 +22,7 @@ public class TextWindow extends JPanel{
 	TextWindow (){
 		buttonPlay = new JButton(">");
 		buttonMoveBack = new JButton("<<");
+		
 		buttonMoveForword = new JButton(">>");
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(buttonMoveBack, LEFT_ALIGNMENT);

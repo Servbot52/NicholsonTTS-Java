@@ -15,5 +15,8 @@ public class Launcher {
 		
 		PlayListener pListener = new PlayListener(speechWaiter, window.buttonPlay, window.mainField);
 		window.buttonPlay.addActionListener(pListener);
+		
+		CaretListener caretListener = new CaretListener(speechWaiter);
+		window.mainField.getCaret().addChangeListener(caretListener);
 	}
 }

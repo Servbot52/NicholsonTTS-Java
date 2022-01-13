@@ -4,15 +4,13 @@ import javax.swing.event.ChangeListener;
 
 class CaretListener implements ChangeListener{
 	SpeechWaiter speechWaiter;
-	JTextField mainField;
 	
-	CaretListener(SpeechWaiter sW, JTextField mainField){
+	CaretListener(SpeechWaiter sW){
 		speechWaiter = sW;
-		this.mainField = mainField;
 	}
 	
 	@Override
 	public void stateChanged(ChangeEvent e)  {
-		speechWaiter.stopReading();
+		speechWaiter.inputCurserMovement();
 	}
 }
