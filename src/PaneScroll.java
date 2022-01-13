@@ -71,17 +71,7 @@ public class PaneScroll{
 			e1.printStackTrace();
 		}
 		
-		/*
-		try {
-			if( Utilities.getRowStart(area, start) == -1 || Utilities.getRowStart(area, start + length) == -1) {
-				System.out.println("makeItVisable can't see part.");
-			}
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			System.out.println("FieldExtend.makeItVisable");
-			e.printStackTrace();
-		}
-		*/
+
 	}
 	
 }

@@ -120,7 +120,7 @@ class SpeechWaiter{
 		allSectionsBuild = false;
 
 
-		QueueThread qThread = new QueueThread(getTimeStamp(), this, getReadQueue());
+		QueueThread qThread = new QueueThread(getTimeStamp(), this, getReadQueue(), pScroll);
 		qThread.start();
 	}
 	void newSectionReady(Section newSection) {
