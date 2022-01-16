@@ -3,6 +3,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 
 public class TextWindow extends JPanel{
@@ -15,6 +16,7 @@ public class TextWindow extends JPanel{
 	//PaneScroll paneScroll;
 	JFrame theFrame;
 	JScrollPane scroll;
+	JSpinner WPMBox;
 	
 	SpeechWaiter speechWaiter;
 	//ReadQueue readQueue() {return speechWaiter.getReadQueue();}
@@ -28,6 +30,16 @@ public class TextWindow extends JPanel{
 		buttonPanel.add(buttonMoveBack, LEFT_ALIGNMENT);
 		buttonPanel.add(buttonPlay, CENTER_ALIGNMENT);
 		buttonPanel.add(buttonMoveForword, RIGHT_ALIGNMENT);
+		
+		JSpinner WPMBox = new JSpinner();
+		JPanel spinnerPanel = new JPanel();
+		spinnerPanel.add(WPMBox);
+		
+		
+		
+		JPanel barPanel = new JPanel();
+		barPanel.add(buttonPanel, LEFT_ALIGNMENT);
+		barPanel.add(spinnerPanel, CENTER_ALIGNMENT);
 		
 		theFrame = new JFrame("NicholsonTTS");
 		
@@ -43,7 +55,7 @@ public class TextWindow extends JPanel{
 		
 		
 		theFrame.getContentPane().add(scroll, BorderLayout.CENTER);
-		theFrame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
+		theFrame.getContentPane().add(barPanel, BorderLayout.PAGE_START);
 
 		theFrame.pack();
 		theFrame.setVisible(true);
