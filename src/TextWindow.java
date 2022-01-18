@@ -31,7 +31,8 @@ public class TextWindow extends JPanel{
 		buttonPanel.add(buttonPlay, CENTER_ALIGNMENT);
 		buttonPanel.add(buttonMoveForword, RIGHT_ALIGNMENT);
 		
-		JSpinner WPMBox = new JSpinner();
+		WPMBox = new JSpinner();
+		WPMBox.setValue(200);
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.add(WPMBox);
 		

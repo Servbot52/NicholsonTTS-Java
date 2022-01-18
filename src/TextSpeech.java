@@ -30,6 +30,7 @@ class TextSpeech {
 		//make sure voice is up to date.
 		Voice voice = VoiceManager.getInstance().getVoice(getVoice());
 		
+		System.out.println("WPM: " + settings.getWPM());
 	    voice.allocate();// Allocating Voice
 	    voice.setRate(settings.getWPM());// Setting the rate of the voice
 	    voice.setPitch(150);// Setting the Pitch of the voice

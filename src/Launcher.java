@@ -14,7 +14,7 @@ public class Launcher {
 		window.buttonMoveForword.addActionListener(skipListener);
 		
 		window.WPMBox.setValue(settings.getWPM());
-		WPMListener wpmListener = new WPMListener(settings, window.WPMBox);
+		WPMListener wpmListener = new WPMListener(settings);
 		window.WPMBox.addChangeListener(wpmListener);
 		
 		PlayListener pListener = new PlayListener(speechWaiter, window.buttonPlay, window.mainField);
