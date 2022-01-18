@@ -3,9 +3,11 @@ import com.sun.speech.freetts.VoiceManager;
 
 class TextSpeech {
 	private SpeechWaiter speechWaiter;
+	private Settings settings;
 	
-	TextSpeech(SpeechWaiter sWaiter){
+	TextSpeech(SpeechWaiter sWaiter, Settings settings){
 		speechWaiter = sWaiter;
+		this.settings = settings;
 		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 	    
 		//need to search for voices to use;
@@ -29,7 +31,7 @@ class TextSpeech {
 		Voice voice = VoiceManager.getInstance().getVoice(getVoice());
 		
 	    voice.allocate();// Allocating Voice
-	    voice.setRate(getWPM());// Setting the rate of the voice
+	    voice.setRate(settings.getWPM());// Setting the rate of the voice
 	    voice.setPitch(150);// Setting the Pitch of the voice
 	    voice.setVolume(3);// Setting the volume of the voice
 	    
@@ -60,8 +62,4 @@ class TextSpeech {
 		return names;
 	}
 	
-	
-	private float wpm = 190;
-	float getWPM() { return wpm; }
-	void setWPM(float wpm) { this.wpm = wpm; }
 }

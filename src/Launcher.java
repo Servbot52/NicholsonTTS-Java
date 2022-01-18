@@ -6,12 +6,16 @@ public class Launcher {
 		TextWindow window = new TextWindow();
 		//move following to launcher?
 		PaneScroll paneScroll = new PaneScroll(window.scroll, window.mainField);
-		SpeechWaiter speechWaiter = new SpeechWaiter(window.buttonPlay, paneScroll);
+		SpeechWaiter speechWaiter = new SpeechWaiter(window.buttonPlay, paneScroll, settings);
 
 		//speechWaiter.playButton = buttonPlay;
 		SkipButtonListener skipListener = new SkipButtonListener(speechWaiter, window.buttonMoveBack, window.buttonMoveForword);
 		window.buttonMoveBack.addActionListener(skipListener);
 		window.buttonMoveForword.addActionListener(skipListener);
+		
+		window.WPMBox.setValue(settings.getWPM());
+		WPMListener wpmListener = new WPMListener(settings, window.WPMBox);
+		window.WPMBox.addChangeListener(wpmListener);
 		
 		PlayListener pListener = new PlayListener(speechWaiter, window.buttonPlay, window.mainField);
 		window.buttonPlay.addActionListener(pListener);

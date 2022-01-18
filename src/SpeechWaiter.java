@@ -4,9 +4,10 @@ import java.util.concurrent.BlockingQueue;
 import javax.swing.JButton;
 
 class SpeechWaiter{
-	SpeechWaiter(JButton playButton, PaneScroll pScroll){
+	SpeechWaiter(JButton playButton, PaneScroll pScroll, Settings settings){
 		this.playButton = playButton;
 		this.pScroll = pScroll;
+		this.settings = settings;
 	}
 	
 	
@@ -43,10 +44,11 @@ class SpeechWaiter{
 		return readQueue;
 	}
 	
+	private Settings settings; 
 	private TextSpeech textSpeech;
 	TextSpeech getTextSpeech() {
 		if(textSpeech == null) {
-			textSpeech = new TextSpeech(this);
+			textSpeech = new TextSpeech(this, settings);
 		}
 		return textSpeech;
 	}

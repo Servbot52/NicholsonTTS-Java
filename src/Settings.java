@@ -5,9 +5,14 @@ import java.io.ObjectOutputStream;
 
 class Settings {
 	//words per minute.
-	private float wpm;
+	private float wpm = 200;
 	float getWPM() { return wpm; }
 	void setWPM(float wpm) {
+		if(wpm < 1)
+			wpm = 1;
+		else if(wpm > 999)
+			wpm = 999;
+		
 		this.wpm = wpm;
 		settingsHaveChanged = true;
 	}
