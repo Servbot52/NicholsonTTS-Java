@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 
 public class TextWindow extends JPanel{
 	/**
@@ -21,7 +22,7 @@ public class TextWindow extends JPanel{
 	SpeechWaiter speechWaiter;
 	//ReadQueue readQueue() {return speechWaiter.getReadQueue();}
 	
-	TextWindow (){
+	TextWindow (Settings settings){
 		buttonPlay = new JButton(">");
 		buttonMoveBack = new JButton("<<");
 		
@@ -31,8 +32,11 @@ public class TextWindow extends JPanel{
 		buttonPanel.add(buttonPlay, CENTER_ALIGNMENT);
 		buttonPanel.add(buttonMoveForword, RIGHT_ALIGNMENT);
 		
-		WPMBox = new JSpinner();
-		WPMBox.setValue(200);
+		
+		
+		SpinnerNumberModel wpmModel = new SpinnerNumberModel(settings.getWPM(), settings.getMinWPM(), settings.getMaxWPM(), (float) 10);
+		WPMBox = new JSpinner(wpmModel);
+		//WPMBox.setValue(200);
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.add(WPMBox);
 		

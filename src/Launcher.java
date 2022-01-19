@@ -3,7 +3,7 @@ public class Launcher {
 	public static void main(String[] args) {
 		Settings settings = new Settings();
 		
-		TextWindow window = new TextWindow();
+		TextWindow window = new TextWindow(settings);
 		//move following to launcher?
 		PaneScroll paneScroll = new PaneScroll(window.scroll, window.mainField);
 		SpeechWaiter speechWaiter = new SpeechWaiter(window.buttonPlay, paneScroll, settings);

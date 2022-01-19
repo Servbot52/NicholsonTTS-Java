@@ -5,13 +5,17 @@ import java.io.ObjectOutputStream;
 
 class Settings {
 	//words per minute.
+	private float maxWPM = 999;
+	float getMaxWPM() { return maxWPM; }
+	private float minWPM = 1;
+	float getMinWPM() { return minWPM; }
 	private float wpm = 200;
 	float getWPM() { return wpm; }
 	void setWPM(float wpm) {
-		if(wpm < 1)
-			wpm = 1;
-		else if(wpm > 999)
-			wpm = 999;
+		if(wpm < minWPM)
+			wpm = minWPM;
+		else if(wpm > maxWPM)
+			wpm = maxWPM;
 		
 		this.wpm = wpm;
 		settingsHaveChanged = true;
