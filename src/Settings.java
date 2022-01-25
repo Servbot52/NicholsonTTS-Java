@@ -52,7 +52,7 @@ class Settings {
 		settingsHaveChanged = true;
 	}
 	
-	private String voiceName;
+	private String voiceName = "kevin16";
 	String getVoiceName() {
 		return voiceName;
 	}

@@ -8,7 +8,7 @@ class TextSpeech {
 	TextSpeech(SpeechWaiter sWaiter, Settings settings){
 		speechWaiter = sWaiter;
 		this.settings = settings;
-		//System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 	    
 		//need to search for voices to use;
 	}
@@ -28,7 +28,7 @@ class TextSpeech {
 	void speakSection(Section theSection)  {
 		voiceOptions();
 		//make sure voice is up to date.
-		Voice voice = VoiceManager.getInstance().getVoice(getVoice());
+		Voice voice = VoiceManager.getInstance().getVoice(settings.getVoiceName());
 		
 		System.out.println("WPM: " + settings.getWPM());
 	    voice.allocate();// Allocating Voice
@@ -40,19 +40,6 @@ class TextSpeech {
 		thread.start();
 	}
 	
-	private String voiceName = "kevin16";
-	String getVoice() {
-		if(voiceName == null) {
-			return VoiceManager.getInstance().getVoices()[0].getName();
-		}
-		return voiceName;
-	}
-	void setVoice(String newVoiceName) {
-		for(Voice v : VoiceManager.getInstance().getVoices()) {
-			if(v.getName() == newVoiceName)
-				voiceName = newVoiceName;
-		}
-	}
 	String[] voiceOptions() {
 		Voice[] voices = VoiceManager.getInstance().getVoices();
 		String[] names = new String[voices.length];
