@@ -8,7 +8,7 @@ class TextSpeech {
 	TextSpeech(SpeechWaiter sWaiter, Settings settings){
 		speechWaiter = sWaiter;
 		this.settings = settings;
-		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+		//System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 	    
 		//need to search for voices to use;
 	}

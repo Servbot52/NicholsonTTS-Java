@@ -1,5 +1,6 @@
 import java.awt.*;
-import javax.swing.JButton;  
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,11 +37,13 @@ public class TextWindow extends JPanel{
 		
 		SpinnerNumberModel wpmModel = new SpinnerNumberModel(settings.getWPM(), settings.getMinWPM(), settings.getMaxWPM(), (float) 10);
 		WPMBox = new JSpinner(wpmModel);
-		//WPMBox.setValue(200);
+		
+		
+		
+		JComboBox<String> voiceNameBox = new JComboBox<String>(settings.getVoiceOptions());
 		JPanel spinnerPanel = new JPanel();
-		spinnerPanel.add(WPMBox);
-		
-		
+		spinnerPanel.add(voiceNameBox, LEFT_ALIGNMENT);
+		spinnerPanel.add(WPMBox, CENTER_ALIGNMENT);
 		
 		JPanel barPanel = new JPanel();
 		barPanel.add(buttonPanel, LEFT_ALIGNMENT);

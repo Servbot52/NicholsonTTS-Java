@@ -3,7 +3,24 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+
 class Settings {
+	Settings(){
+		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+	}
+	String[] getVoiceOptions() {
+		Voice[] voices = VoiceManager.getInstance().getVoices();
+		String[] names = new String[voices.length];
+		for(int i = 0; i < voices.length; i++) {
+			System.out.println("Voice: "+voices[i].getName());
+			names[i] = voices[i].getName();
+		}
+		return names;
+	}
+	
+	
 	//words per minute.
 	private float maxWPM = 999;
 	float getMaxWPM() { return maxWPM; }
