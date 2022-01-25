@@ -11,14 +11,18 @@ class WPMListener implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent e)  {
-		JSpinner wpmSpinner = (JSpinner) e.getSource();
+		if(e.getSource().getClass() == JSpinner.class) {
+			System.out.println("class jspinner");
+			wpmChange((JSpinner) e.getSource());
+		}
+	}
+	
+	private void wpmChange(JSpinner wpmSpinner) {
+		//JSpinner wpmSpinner = (JSpinner) e.getSource();
 		float spinnerValue = ((Double) wpmSpinner.getValue()).floatValue();
 		if( settings.getWPM() != spinnerValue) {
 			settings.setWPM( spinnerValue );
-			//in case the it's a invalid number 
-			if(settings.getWPM() != spinnerValue) {
-				wpmSpinner.setValue( (double) settings.getWPM());
-			}
 		}
 	}
+	
 }

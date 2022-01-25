@@ -19,6 +19,7 @@ public class TextWindow extends JPanel{
 	JFrame theFrame;
 	JScrollPane scroll;
 	JSpinner WPMBox;
+	JComboBox<String> voiceNameBox;
 	
 	SpeechWaiter speechWaiter;
 	//ReadQueue readQueue() {return speechWaiter.getReadQueue();}
@@ -37,10 +38,15 @@ public class TextWindow extends JPanel{
 		
 		SpinnerNumberModel wpmModel = new SpinnerNumberModel(settings.getWPM(), settings.getMinWPM(), settings.getMaxWPM(), (float) 10);
 		WPMBox = new JSpinner(wpmModel);
+		WPMBox.setValue(settings.getWPM());
+		WPMBox.addChangeListener(new WPMListener(settings));
 		
 		
 		
-		JComboBox<String> voiceNameBox = new JComboBox<String>(settings.getVoiceOptions());
+		voiceNameBox = new JComboBox<String>(settings.getVoiceOptions());
+		voiceNameBox.addActionListener(new VoiceNameListener(settings));
+		
+		
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.add(voiceNameBox, LEFT_ALIGNMENT);
 		spinnerPanel.add(WPMBox, CENTER_ALIGNMENT);
