@@ -30,7 +30,7 @@ public class QueueThread extends Thread {
 						switch(newItem.getSectionText()) {
 						case "END":
 							pScroll.finishReadingArea();
-							sWaiter.pause();
+							pause();
 							setContinueReading(false);
 							break;
 						case "STEPFORWORD":
@@ -44,7 +44,7 @@ public class QueueThread extends Thread {
 							sWaiter.read();
 							break;
 						case "PAUSE":
-							sWaiter.pause();
+							pause();
 							break;
 						case "allSectionsBuilt":
 							allSectionsBuild = true;
@@ -58,7 +58,7 @@ public class QueueThread extends Thread {
 							break;
 						}						
 					}else {
-						sWaiter.newSectionReady(newItem);
+						newSectionReady(newItem);
 					}
 				}
 				
@@ -88,7 +88,7 @@ public class QueueThread extends Thread {
 		if(sWaiter.isPaused) {
 			readQueue.stepForward();
 		}else{
-			sWaiter.pause();
+			pause();
 			readQueue.stepForward();
 			sWaiter.isPaused = false;
 			sWaiter.read();
@@ -99,12 +99,33 @@ public class QueueThread extends Thread {
 		if(sWaiter.isPaused) {
 			readQueue.stepBack();
 		}else{
-			sWaiter.pause();
+			pause();
 			readQueue.stepBack();
 			sWaiter.isPaused = false;
 			sWaiter.read();
 		}
 	}
 	
+	void newSectionReady(Section newSection) {
+		readQueue.addSection(newSection);
+		if(sWaiter.isSpeaking == false && getContinueReading()) {
+			pScroll.finishReadingArea();
+			
+			if(sWaiter.isPaused)
+				return;
+			
+			if(sWaiter.firstElement == false)
+				sWaiter.getReadQueue().stepForward();
+			sWaiter.read();
+		}
+	}
+	
+	
+	void pause() {
+		sWaiter.isPaused = true;
+		
+		sWaiter.getTextSpeech().stopSpeaking();
+		sWaiter.isSpeaking = false;
+	}
 	
 }

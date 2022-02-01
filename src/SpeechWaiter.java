@@ -95,12 +95,7 @@ class SpeechWaiter{
 	
 	boolean isPaused = false;
 	
-	void pause() {
-		isPaused = true;
-		
-		getTextSpeech().stopSpeaking();
-		isSpeaking = false;
-	}
+	
 	void stopReading() {
 		needNewText = true;
 		setContinueReading(false);
@@ -109,7 +104,7 @@ class SpeechWaiter{
 	}
 	
 	boolean needNewText = true;
-	private boolean firstElement = true;
+	boolean firstElement = true;
 	void inputPlayNew(String selectedText, int selectedStart) {
 		isPaused = false;
 		firstElement = true;
@@ -125,19 +120,7 @@ class SpeechWaiter{
 		QueueThread qThread = new QueueThread(getTimeStamp(), this, getReadQueue(), pScroll);
 		qThread.start();
 	}
-	void newSectionReady(Section newSection) {
-		readQueue.addSection(newSection);
-		if(isSpeaking == false && getContinueReading()) {
-			pScroll.finishReadingArea();
-			
-			if(isPaused)
-				return;
-			
-			if(firstElement == false)
-				getReadQueue().stepForward();
-			read();
-		}
-	}
+	
 	
 	void inputResume() {
 		SectionInstruction resumeReading = new SectionInstruction("RESUME", playTimeStamp);
