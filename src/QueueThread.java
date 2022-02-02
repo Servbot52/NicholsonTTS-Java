@@ -7,6 +7,7 @@ public class QueueThread extends Thread {
 		this.readQueue = readQueue;
 		this.pScroll = pScroll;
 	}
+	
 	private ReadQueue readQueue;
 	long timeStamp;
 	
@@ -41,7 +42,7 @@ public class QueueThread extends Thread {
 							break;
 						case "RESUME":
 							sWaiter.isPaused = false;
-							sWaiter.read();
+							read();
 							break;
 						case "PAUSE":
 							pause();
@@ -54,7 +55,7 @@ public class QueueThread extends Thread {
 								thisContinue = false;
 								setContinueReading(false);
 							}
-							sWaiter.speakingDone();
+							speakingDone();
 							break;
 						}						
 					}else {
@@ -91,7 +92,7 @@ public class QueueThread extends Thread {
 			pause();
 			readQueue.stepForward();
 			sWaiter.isPaused = false;
-			sWaiter.read();
+			read();
 		}
 	}
 	private void stepBack() {
@@ -102,7 +103,7 @@ public class QueueThread extends Thread {
 			pause();
 			readQueue.stepBack();
 			sWaiter.isPaused = false;
-			sWaiter.read();
+			read();
 		}
 	}
 	
@@ -116,7 +117,7 @@ public class QueueThread extends Thread {
 			
 			if(sWaiter.firstElement == false)
 				sWaiter.getReadQueue().stepForward();
-			sWaiter.read();
+			read();
 		}
 	}
 	
@@ -128,4 +129,32 @@ public class QueueThread extends Thread {
 		sWaiter.isSpeaking = false;
 	}
 	
+	void speakingDone() {
+		sWaiter.firstElement = false;
+		sWaiter.isSpeaking = false;
+		if(sWaiter.isNextPartReady() && getContinueReading()) {
+			pScroll.finishReadingArea();
+			
+			if(sWaiter.isPaused)
+				return;
+			
+			sWaiter.getReadQueue().stepForward();
+			read();
+		}
+	}
+	void read() {
+		if(sWaiter.isPaused)
+			return;
+		
+		if(getContinueReading() == false)
+			return;
+		
+		if(sWaiter.isSpeaking)
+			return;
+		
+		sWaiter.isSpeaking = true;
+		Section readSection = sWaiter.getReadQueue().currentElement;
+		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
+		sWaiter.getTextSpeech().speakSection(readSection);
+	}
 }

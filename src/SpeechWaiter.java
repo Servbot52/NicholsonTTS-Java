@@ -54,7 +54,7 @@ class SpeechWaiter{
 	}
 	
 	boolean isSpeaking = false;
-	private boolean isNextPartReady() {
+	boolean isNextPartReady() {
 		if(readQueue.currentElement == null) {
 			return false;
 		}
@@ -64,34 +64,8 @@ class SpeechWaiter{
 		return true;
 	}
 	
-	void speakingDone() {
-		firstElement = false;
-		isSpeaking = false;
-		if(isNextPartReady() && getContinueReading()) {
-			pScroll.finishReadingArea();
-			
-			if(isPaused)
-				return;
-			
-			getReadQueue().stepForward();
-			read();
-		}
-	}
-	void read() {
-		if(isPaused)
-			return;
-		
-		if(getContinueReading() == false)
-			return;
-		
-		if(isSpeaking)
-			return;
-		
-		isSpeaking = true;
-		Section readSection = getReadQueue().currentElement;
-		pScroll.readingNewArea(readSection.getStart(), readSection.getEnd() - readSection.getStart());
-		getTextSpeech().speakSection(readSection);
-	}
+
+
 	
 	boolean isPaused = false;
 	
