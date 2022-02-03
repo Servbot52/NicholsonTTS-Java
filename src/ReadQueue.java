@@ -1,8 +1,12 @@
+import java.util.concurrent.BlockingQueue;
+
 public class ReadQueue {
 	ReadQueue(SpeechWaiter sWaiter){
 		speechWaiter = sWaiter;
 	}
 	SpeechWaiter speechWaiter;
+	private long timeStamp() { return speechWaiter.getTimeStamp(); }
+	private BlockingQueue<Section> blockQueue(){ return speechWaiter.sectionBlockQueue; }
 	
 	private Section firstElement;
 	private Section finalElement;
@@ -67,7 +71,7 @@ public class ReadQueue {
 		firstElement = null;
 		finalElement = null;
 		currentElement = null;
-		fullText = new FullText(selectedText, selectedStart, this);
+		fullText = new FullText(selectedText, selectedStart, timeStamp(), blockQueue());
 		fullText.start();
 	}
 }

@@ -25,15 +25,17 @@ public class FullText  extends Thread{
     
     private static char[] endMarks = {'.', '!', '?', '\n', '\t'};
     
-    private ReadQueue readQueue;
-    FullText(String theText, int sLocation, ReadQueue rQueue){
+    
+    FullText(String theText, int sLocation, long timeStamp, BlockingQueue<Section> sectionBlockQueue){
     	fullStart = sLocation;
         fullText = theText;
-        readQueue = rQueue;
+        this.timeStamp = timeStamp;
+        this.sectionBlockQueue = sectionBlockQueue;
     }
+    private BlockingQueue<Section> sectionBlockQueue;
     
-    private BlockingQueue<Section> sectionBlockQueue(){ return readQueue.speechWaiter.sectionBlockQueue; }
-    private long timeStamp() { return readQueue.speechWaiter.getTimeStamp(); }
+    private long timeStamp;
+    private long timeStamp() { return timeStamp; }
     
     public void run() {
     	while(reachedEnd() == false) {
@@ -41,7 +43,7 @@ public class FullText  extends Thread{
     		//add pronunciation here
     		
     		try {
-				sectionBlockQueue().put(nextSection);
+				sectionBlockQueue.put(nextSection);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,7 +52,7 @@ public class FullText  extends Thread{
     	//tell the SpeechWaiter that it is finished.
     	SectionInstruction fullyBuilt = new SectionInstruction("allSectionsBuilt", timeStamp());
     	try {
-			sectionBlockQueue().put(fullyBuilt);
+			sectionBlockQueue.put(fullyBuilt);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

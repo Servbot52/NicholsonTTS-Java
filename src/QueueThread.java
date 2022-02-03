@@ -9,7 +9,8 @@ public class QueueThread extends Thread {
 	}
 	
 	private ReadQueue readQueue;
-	long timeStamp;
+	private long timeStamp;
+	long getTimeStamp() { return timeStamp; }
 	
 	private PaneScroll pScroll;
 	SpeechWaiter sWaiter;
