@@ -4,6 +4,7 @@ public class ReadQueue {
 	ReadQueue(SpeechWaiter sWaiter){
 		speechWaiter = sWaiter;
 	}
+	
 	SpeechWaiter speechWaiter;
 	private long timeStamp() { return speechWaiter.getTimeStamp(); }
 	private BlockingQueue<Section> blockQueue(){ return speechWaiter.sectionBlockQueue; }
